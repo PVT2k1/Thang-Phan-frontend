@@ -1,0 +1,12 @@
+body {
+    background-color: #80c2ca;
+}
+
+.currency-converter {
+    width: 680px;
+    height: 100px;
+    margin: 250px;
+    padding: 20px;
+    border: 4px solid rgb(3, 3, 8);
+    background-color: aliceblue;
+}
