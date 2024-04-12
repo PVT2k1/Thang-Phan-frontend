@@ -30,10 +30,9 @@ const WalletPage: React.FC<BoxProps> = (props: BoxProps) => {
         }
     }
 
-    const sortedBalances = useMemo(() => {
-        return balances.filter((balance: WalletBalance) => {
+    const sortedBalances = balances.filter((balance: WalletBalance) => {
             const balancePriority = getPriority(balance.blockchain);
-            if (lhsPriority > -99) {
+            if (balancePriority > -99) {
                 if (balance.amount <= 0) {
                     return true;
                 }
@@ -48,7 +47,6 @@ const WalletPage: React.FC<BoxProps> = (props: BoxProps) => {
                 return 1;
             }
         });
-    }, [balances, prices]);
 
     const formattedBalances = sortedBalances.map((balance: WalletBalance) => {
         return {
@@ -57,7 +55,7 @@ const WalletPage: React.FC<BoxProps> = (props: BoxProps) => {
         }
     })
 
-    const rows = sortedBalances.map((balance: FormattedWalletBalance, index: number) => {
+    const rows = formattedBalances.map((balance: FormattedWalletBalance, index: number) => {
         const usdValue = prices[balance.currency] * balance.amount;
         return (
             <WalletRow
