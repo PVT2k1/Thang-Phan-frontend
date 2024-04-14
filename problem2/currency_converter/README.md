@@ -15,7 +15,8 @@ It will install all dependencies to start app
 ### `npm start`
 
 Runs the app in the development mode.\
+You may also see any lint errors in the console.\
 Open http://localhost:3000 to view it in your browser.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+#### UI image:
+![UI](https://github.com/PVT2k1/Thang-Phan-frontend/assets/97418614/8df99d3b-3e1c-4098-b9f4-19b43777ecf3)
