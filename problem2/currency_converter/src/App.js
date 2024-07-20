@@ -20,15 +20,15 @@ function App() {
     GetCurrencyList();
   }, [])
 
+  async function Convert() {
+    const res = await fetch(
+      `https://api.frankfurter.app/latest?amount=${amount}&from=${fromCurrency}&to=${toCurrency}`
+    );
+    const data = await res.json();
+    setConvertedAmount(data.rates[toCurrency]);
+  }
+  
   useEffect(() => {
-    async function Convert() {
-      const res = await fetch(
-        `https://api.frankfurter.app/latest?amount=${amount}&from=${fromCurrency}&to=${toCurrency}`
-      );
-      const data = await res.json();
-      setConvertedAmount(data.rates[toCurrency]);
-    }
-
     if (amount === '' || amount === '0')
       return setConvertedAmount('');
 
@@ -36,16 +36,24 @@ function App() {
       setConvertedAmount(amount);
     else
       Convert();
-  }, [amount, fromCurrency, toCurrency])
+  }, [fromCurrency, toCurrency])
+
+  function Reset(e) {
+    setAmount(e.target.value);
+    setConvertedAmount('');
+  }
 
   return (
     <div className='currency-converter'>
       <div>
+        <h2 style={{color: 'rgb(63,72,143)'}}>Currency Swap Form</h2>
+
+        <label style={{marginRight: '8px'}}>Amout to send:</label>
         <input
           type='text'
           value={amount}
           placeholder={fromCurrency}
-          onChange={(e) => setAmount(e.target.value)}
+          onChange={(e) => Reset(e)}
         />
 
         <label style={{marginLeft: '8px', marginRight: '8px'}}>from</label>
@@ -67,9 +75,12 @@ function App() {
             <option value={currency} key={currency}>{currency} - {currencyList[currency]}</option>
           ))}
         </select>
-      </div>
 
-      {convertedAmount !== '' && <p>{convertedAmount} {toCurrency}</p>}
+        <button style={{marginLeft: '8px'}} onClick={Convert}>CONFIRM SWAP</button>
+      </div>
+      <div>
+        {convertedAmount !== '' && <p>Amount to receive: {convertedAmount} {toCurrency}</p>}
+      </div>
     </div>
   )
 }
