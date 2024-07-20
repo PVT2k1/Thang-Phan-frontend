@@ -31,7 +31,7 @@ function App() {
     else
       setConvertedAmount(data.rates[toCurrency]);
   }
-  
+
   useEffect(() => {
     if (amount === '' || amount === '0')
       return setConvertedAmount('');
@@ -60,44 +60,40 @@ function App() {
 
   return (
     <div className='currency-converter'>
-      <div>
-        <h2 style={{color: 'rgb(63,72,143)'}}>Currency Swap Form</h2>
+      <h2 style={{ color: 'rgb(63,72,143)', textAlign: 'center' }}>Currency Swap Form</h2>
 
-        <label style={{marginRight: '8px'}}>Amout to send:</label>
-        <input
-          type='text'
-          value={amount}
-          placeholder={fromCurrency}
-          className= {errorMessage !== '' ? 'error' : ''}
-          onChange={(e) => ChangeInput(e)}
-        />
+      <label style={{ marginRight: '8px' }}>Amout to send:</label>
+      <input
+        type='text'
+        value={amount}
+        placeholder={fromCurrency}
+        className={errorMessage !== '' ? 'error' : ''}
+        onChange={(e) => ChangeInput(e)}
+      />
 
-        <label style={{marginLeft: '8px', marginRight: '8px'}}>from</label>
-        <select
-          value={fromCurrency}
-          onChange={(e) => setFromCurrency(e.target.value)}
-        >
-          {Object.keys(currencyList).map((currency) => (
-            <option value={currency} key={currency}>{currency} - {currencyList[currency]}</option>
-          ))}
-        </select>
+      <label style={{ marginLeft: '8px', marginRight: '8px' }}>from</label>
+      <select
+        value={fromCurrency}
+        onChange={(e) => setFromCurrency(e.target.value)}
+      >
+        {Object.keys(currencyList).map((currency) => (
+          <option value={currency} key={currency}>{currency} - {currencyList[currency]}</option>
+        ))}
+      </select>
 
-        <label style={{marginLeft: '8px', marginRight: '8px'}}>to</label>
-        <select
-          value={toCurrency}
-          onChange={(e) => setToCurrency(e.target.value)}
-        >
-          {Object.keys(currencyList).map((currency) => (
-            <option value={currency} key={currency}>{currency} - {currencyList[currency]}</option>
-          ))}
-        </select>
+      <label style={{ marginLeft: '8px', marginRight: '8px' }}>to</label>
+      <select
+        value={toCurrency}
+        onChange={(e) => setToCurrency(e.target.value)}
+      >
+        {Object.keys(currencyList).map((currency) => (
+          <option value={currency} key={currency}>{currency} - {currencyList[currency]}</option>
+        ))}
+      </select>
 
-        <button style={{marginLeft: '8px'}} onClick={Convert}>CONFIRM SWAP</button>
-      </div>
-      <div>
-        {convertedAmount !== '' && <p>Amount to receive: {convertedAmount} {toCurrency}</p>}
-        {errorMessage !== '' && <p style={{color: '#d82b2b'}}>{errorMessage}</p>}
-      </div>
+      <button style={{ marginLeft: '8px' }} onClick={Convert}>CONFIRM SWAP</button>
+      {convertedAmount !== '' && <p>Amount to receive: {convertedAmount} {toCurrency}</p>}
+      {errorMessage !== '' && <p style={{ color: '#d82b2b' }}>{errorMessage}</p>}
     </div>
   )
 }
