@@ -19,4 +19,4 @@ You may also see any lint errors in the console.\
 Open http://localhost:3000 to view it in your browser.
 
 #### UI image:
-![UI](https://github.com/PVT2k1/Thang-Phan-frontend/assets/97418614/8df99d3b-3e1c-4098-b9f4-19b43777ecf3)
+![UI](https://github.com/user-attachments/assets/46f35d2f-09f0-4e80-b634-416f8764a88e)
