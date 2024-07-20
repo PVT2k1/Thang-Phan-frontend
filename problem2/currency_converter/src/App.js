@@ -7,6 +7,7 @@ function App() {
   const [toCurrency, setToCurrency] = useState('EUR');
   const [currencyList, setCurrencyList] = useState({});
   const [convertedAmount, setConvertedAmount] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     async function GetCurrencyList() {
@@ -25,7 +26,10 @@ function App() {
       `https://api.frankfurter.app/latest?amount=${amount}&from=${fromCurrency}&to=${toCurrency}`
     );
     const data = await res.json();
-    setConvertedAmount(data.rates[toCurrency]);
+    if (!data.rates)
+      setErrorMessage(data.message);
+    else
+      setConvertedAmount(data.rates[toCurrency]);
   }
   
   useEffect(() => {
@@ -38,9 +42,20 @@ function App() {
       Convert();
   }, [fromCurrency, toCurrency])
 
-  function Reset(e) {
+  function TestInput(input) {
+    const regex = /^[0-9.]+$/;
+    return regex.test(input);
+  }
+
+  function ChangeInput(e) {
+    if (e.target.value !== '' && !TestInput(e.target.value))
+      setErrorMessage('Wrong Input Format');
+    else if (errorMessage !== '')
+      setErrorMessage('');
+
     setAmount(e.target.value);
-    setConvertedAmount('');
+    if (convertedAmount !== '')
+      setConvertedAmount('');
   }
 
   return (
@@ -53,7 +68,8 @@ function App() {
           type='text'
           value={amount}
           placeholder={fromCurrency}
-          onChange={(e) => Reset(e)}
+          className= {errorMessage !== '' ? 'error' : ''}
+          onChange={(e) => ChangeInput(e)}
         />
 
         <label style={{marginLeft: '8px', marginRight: '8px'}}>from</label>
@@ -80,6 +96,7 @@ function App() {
       </div>
       <div>
         {convertedAmount !== '' && <p>Amount to receive: {convertedAmount} {toCurrency}</p>}
+        {errorMessage !== '' && <p style={{color: '#d82b2b'}}>{errorMessage}</p>}
       </div>
     </div>
   )
